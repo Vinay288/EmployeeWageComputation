@@ -11,7 +11,7 @@ function employeeAttendence(){
         console.log("Employee is Present");
     }
 }
-
+function getWorkingHours(){
 const PART_TIME = 0;
 const FULL_TIME = 1;
 const PART_TIME_HOURS = 4;
@@ -29,5 +29,6 @@ switch (employeeValue) {
     default:
         employeeHours = 0;
 }
-let employeeWage = employeeHours * WAGE_PER_HOUR;
+}
+let employeeWage = getWorkingHours * WAGE_PER_HOUR;
 console.log("Employee wage = " + employeeWage);
