@@ -11,9 +11,9 @@ function employeeAttendence() {
         console.log("Employee is Present");
     }
 }
-let employeeWageArray=new Array()
-function getEmployeeWage(employeeHours){
-employeeWageArray.push(employeeHours*WAGE_PER_HOUR)
+let employeeWageArray = new Array()
+function getEmployeeWage(employeeHours) {
+    employeeWageArray.push(employeeHours * WAGE_PER_HOUR)
 }
 
 function getWorkingHours() {
@@ -46,5 +46,11 @@ for (day = 0; day < MAXIMUM_WORKING_DAYS && workingHours < 160; day++) {
 
 }
 employeeWage += workingHours * WAGE_PER_HOUR;
-console.log("employee wage array "+employeeWageArray)
-console.log("Employee wage = " + employeeWage + " working hours = " + workingHours + " days = " + day);
+//using foreach
+let totalEmployeeWage=0
+function sum(dailyWage)
+{
+    totalEmployeeWage+=dailyWage
+}
+employeeWageArray.forEach(sum);
+console.log("total days: "+day+" Employee hours: "+workingHours+" Employee wage: "+totalEmployeeWage);
