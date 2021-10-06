@@ -29,13 +29,13 @@ function getWorkingHours() {
         default:
             employeeHours = 0;
     }
+    return employeeHours;
 }
 const MAXIMUM_WORKING_DAYS = 20;
 const WAGE_PER_HOUR = 20;
 let employeeWage = 0;
 for (let day = 0; day < MAXIMUM_WORKING_DAYS; day++) {
     employeeWage +=getWorkingHours() * WAGE_PER_HOUR;
-    console.log(employeeWage)
 
 }
 console.log("Employee wage = " + employeeWage);
