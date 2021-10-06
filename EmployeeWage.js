@@ -47,37 +47,40 @@ for (day = 0; day < MAXIMUM_WORKING_DAYS && workingHours < 160; day++) {
 }
 employeeWage += workingHours * WAGE_PER_HOUR;
 //using foreach
-let totalEmployeeWage=0
-function sum(dailyWage)
-{
-    totalEmployeeWage+=dailyWage
+let totalEmployeeWage = 0
+function sum(dailyWage) {
+    totalEmployeeWage += dailyWage
 }
 employeeWageArray.forEach(sum);
-console.log("total days: "+day+" Employee hours: "+workingHours+" Employee wage: "+totalEmployeeWage);
+console.log("total days: " + day + " Employee hours: " + workingHours + " Employee wage: " + totalEmployeeWage);
 
 //using reduce
-function totalWages(totalWage,dailyWage)
-{
-    return totalWage+dailyWage;
+function totalWages(totalWage, dailyWage) {
+    return totalWage + dailyWage;
 }
-console.log("Employee wage with reduce:"+employeeWageArray.reduce(totalWages,0));
+console.log("Employee wage with reduce:" + employeeWageArray.reduce(totalWages, 0));
 
 //mapping day with wage earned that day
-let dayCounter=0
-function mapDayWithWage(dailyWage)
-{
+let dayCounter = 0
+function mapDayWithWage(dailyWage) {
     dayCounter++;
-    return [dayCounter,dailyWage];
+    return [dayCounter, dailyWage];
 }
 
-let mapDayWithWageArray=employeeWageArray.map(mapDayWithWage);
+let mapDayWithWageArray = employeeWageArray.map(mapDayWithWage);
 console.log("Mapping day with Wage earned on that day");
 console.log(mapDayWithWageArray)
 //Using filter to show when full time wage of 160 was earned
-function fulltimeWage(dailyWage)
-{
-    return dailyWage[1]==160;
+function fulltimeWage(dailyWage) {
+    return dailyWage[1] == 160;
 }
-let fullDayWageArray=mapDayWithWageArray.filter(fulltimeWage);
+let fullDayWageArray = mapDayWithWageArray.filter(fulltimeWage);
 console.log("Daily wage when full time wage earned ")
 console.log(fullDayWageArray)
+
+//Find first occurence when full time wage was earned using find
+function findFulltimeWage(dailyWage)
+{
+    return dailyWage[1]==160
+}
+console.log("First full time wage was earned on Day: "+mapDayWithWageArray.find(findFulltimeWage))
