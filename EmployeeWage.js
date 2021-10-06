@@ -61,3 +61,23 @@ function totalWages(totalWage,dailyWage)
     return totalWage+dailyWage;
 }
 console.log("Employee wage with reduce:"+employeeWageArray.reduce(totalWages,0));
+
+//mapping day with wage earned that day
+let dayCounter=0
+function mapDayWithWage(dailyWage)
+{
+    dayCounter++;
+    return [dayCounter,dailyWage];
+}
+
+let mapDayWithWageArray=employeeWageArray.map(mapDayWithWage);
+console.log("Mapping day with Wage earned on that day");
+console.log(mapDayWithWageArray)
+//Using filter to show when full time wage of 160 was earned
+function fulltimeWage(dailyWage)
+{
+    return dailyWage[1]==160;
+}
+let fullDayWageArray=mapDayWithWageArray.filter(fulltimeWage);
+console.log("Daily wage when full time wage earned ")
+console.log(fullDayWageArray)
