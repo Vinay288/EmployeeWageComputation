@@ -148,3 +148,30 @@ employeeDailyWageMap.forEach((value, key, map) => {
     else nonWorkingDays.push(key)
 });
 console.log(nonWorkingDays, partWorkingDays, fullWorkingDays)
+
+//array operations on objects
+let totalWages=employeeDailyHoursAndWageArray
+               .filter(dailyHoursAndWage=>dailyHoursAndWage.dailyWage>0)
+               .reduce((totalWage,dailyHoursAndWage)=>totalWage+=dailyHoursAndWage.dailyWage,0);
+
+let totalHours= employeeDailyHoursAndWageArray
+                .filter(dailyHoursAndWage=>dailyHoursAndWage.dailyWage>0)
+                .reduce((totalHours,dailyHoursAndWage)=>totalHours+=dailyHoursAndWage.dailyHours,0);
+
+console.log("total hours:"+totalHours+" total wages: "+totalWages);
+
+process.stdout.write("Logging full work days")
+
+employeeDailyHoursAndWageArray.filter(dailyHoursAndWage=>dailyHoursAndWage.dailyHours==8)
+                              .forEach(dailyHoursAndWage=>process.stdout.write(dailyHoursAndWage.toString()))
+
+let partWorkingDayString=employeeDailyHoursAndWageArray
+                         .filter(dailyHoursAndWage=>dailyHoursAndWage.dailyHours==4)
+                         .map(dailyHoursAndWage=>dailyHoursAndWage.toString());
+console.log("\nPartWorkingDay Strings: "+partWorkingDayString)                    
+
+let nonWorkingDaysNumbers=employeeDailyHoursAndWageArray
+                      .filter(dailyHoursAndWage=>dailyHoursAndWage.dailyHours==0)
+                      .map(dailyHoursAndWage=>dailyHoursAndWage.dayNumber)
+                    
+console.log("NonWorkingDayNums : "+nonWorkingDaysNumbers)
