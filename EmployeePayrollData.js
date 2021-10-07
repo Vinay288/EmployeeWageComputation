@@ -1,10 +1,5 @@
 class EmployeePayrollData {
-    id;
-    salary;
-    name;
-    gender;
-    startDate;
-
+    
     constructor(...params) {
         this.id = params[0];
         this.name = params[1];
@@ -29,7 +24,13 @@ class EmployeePayrollData {
 
     set name(name)
     {
-        this._name=name;
+        let nameRegex = RegExp('^[A-Z]{1}[a-zA-Z0-9]{3,}$');
+        if (nameRegex.test(name)) {
+            this._name = name;
+        }
+        else {
+            throw new Error("Name is Incorrect");
+        }
     }
 
     get salary()
@@ -73,5 +74,5 @@ let employeePayrollData = new EmployeePayrollData(1, "Mark", 30000);
 console.log(employeePayrollData.toString());
 employeePayrollData.name = "John"
 console.log(employeePayrollData.toString());
-let newEmployeePayrollData= new EmployeePayrollData(1,"Terisa",30000,"F",new Date());
+let newEmployeePayrollData= new EmployeePayrollData(1,"erisa",30000,"F",new Date());
 console.log(newEmployeePayrollData.toString());
