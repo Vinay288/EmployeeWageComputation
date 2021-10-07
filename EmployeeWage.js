@@ -20,12 +20,13 @@ function getEmployeeWage(employeeHours) {
 }
 
 function getWorkingHours() {
-    const PART_TIME = 0;
-    const FULL_TIME = 1;
+    const ABSENT = 0
+    const PART_TIME = 1;
+    const FULL_TIME = 2;
     const PART_TIME_HOURS = 4;
     const FULL_TIME_HOURS = 8;
     let employeeHours = 0;
-    let employeeValue = Math.floor(Math.random() * 10) % 2;
+    let employeeValue = Math.floor(Math.random() * 10) % 3;
     switch (employeeValue) {
         case PART_TIME:
             employeeHours = PART_TIME_HOURS;
@@ -33,11 +34,12 @@ function getWorkingHours() {
         case FULL_TIME:
             employeeHours = FULL_TIME_HOURS;
             break;
+        case ABSENT:
+            employeeHours=ABSENT;
         default:
             employeeHours = 0;
     }
     getEmployeeWage(employeeHours)
-    // employeeDailyWageMap.set(totalWorkingDays, calculateDailyWages(employeeHours))
     return employeeHours;
 }
 const MAXIMUM_WORKING_DAYS = 20;
@@ -46,9 +48,11 @@ const MAXIMUM_WOKING_HOURS = 160;
 let employeeWage = 0, workingHours = 0, day = 0;
 
 for (day = 0; day < MAXIMUM_WORKING_DAYS && workingHours < 160; day++) {
-    workingHours += getWorkingHours();
-
+   let workingHour=getWorkingHours();
+    workingHours+=workingHour
+    employeeDailyWageMap.set(day, workingHour)
 }
+
 employeeWage += workingHours * WAGE_PER_HOUR;
 //using foreach
 let totalEmployeeWage = 0
@@ -122,3 +126,12 @@ console.log("total wage is: "+totalWage)
 let getTotalWorkingHours=(dailyHour,totalHour)=>dailyHour+totalHour
 let totalHours=employeDailyHourArray.filter(dailyHour=>dailyHour>0).reduce(getTotalWorkingHours,0);
 console.log("total working hours is: "+totalHours)
+let nonWorkingDays=new Array()
+let partWorkingDays=new Array()
+let fullWorkingDays=new Array()
+employeeDailyWageMap.forEach((value,key,map)=>{
+    if(value==8) fullWorkingDays.push(key);
+    else if(value==4) partWorkingDays.push(key);
+    else nonWorkingDays.push(key)
+});
+console.log(nonWorkingDays,partWorkingDays,fullWorkingDays)
