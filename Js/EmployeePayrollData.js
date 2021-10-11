@@ -65,16 +65,10 @@ class EmployeePayrollData {
     get startDate() {
         return this._startDate;
     }
-
     set startDate(startDate) {
-        var presentDate = new Date();
-        if ((startDate <= presentDate)) {
+        if (startDate <= new Date() && Math.abs(startDate - new Date() < 30))
             this._startDate = startDate;
-
-        }
-        else {
-            throw new Error("date is Incorrect");
-        }
+        else throw 'Invalid date';
     }
 
     toString() {
