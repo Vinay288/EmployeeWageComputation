@@ -134,7 +134,14 @@ select{
     cursor: pointer;
     border-radius: 4px;
     background-color: #f5f5f5 ;
+    transition-duration: 0.4s;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
+.button:hover {
+    background-color: #4CAF50;
+    color: white;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  }
 .submitButton{
     background-color: #f5f5f5 ;
     margin-right: 30px;
