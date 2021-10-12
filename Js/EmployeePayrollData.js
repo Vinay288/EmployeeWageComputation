@@ -72,7 +72,8 @@ class EmployeePayrollData {
         return this._startDate;
     }
     set startDate(startDate) {
-        if ((startDate <= new Date()) && Math.abs(startDate - new Date()) < 30)
+        const days=Math.abs(startDate - new Date())/(1000*60*60*24);
+        if ((startDate <= new Date()) && days < 30)
             this._startDate = startDate;
         else throw 'Invalid date';
     }
