@@ -6,20 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
     <link href="../Css/employee_payroll.css" rel="stylesheet">
-    <script defer src="../Js/employee_payroll.js"></script>
     <title>Employee Payroll Form</title>
 </head>
 
 <body>
     <header class="header-content header">
         <div class="logo-content">
-            <img src="../Assets/images/logo.png" alt="logo">
+            <img src="../Assets/images/logo.png" alt="logo" height="50" width="50">
             <div>
-                <span class="emp-text">EMPLOYEE</span>
+                <span class="emp-text">EMPLOYEE</span><br>
                 <span class="emp-text emp-payroll">PAYROLL</span>
             </div>
         </div>
@@ -30,6 +26,7 @@
             <div class="row-content">
                 <label class="label text" for="name">Name</label>
                 <input class="input" type="text" id="name" name="name" placeholder="Your name.." required>
+                <error-output class="text-error" for="name"></error-output>
             </div>
 
 
@@ -61,9 +58,9 @@
             <div class="row-content">
                 <label class="label text" for="gender">Gender</label>
                 <div>
-                    <input type="radio" id="male" name="gender" value="male">
+                    <input type="radio" id="gender" name="gender" value="male">
                     <label class="text" for="male">Male</label>
-                    <input type="radio" id="female" name="gender" value="female">
+                    <input type="radio" id="gender" name="gender" value="female">
                     <label class="text" for="female">Female</label>
                 </div>
             </div>
@@ -153,15 +150,16 @@
                 <textarea id="notes" class="input" name="Notes" placeholder="" style="height:100px"></textarea>
             </div>
             <div class="buttonParent">
-                <a href="./home.html" class="resetButton button cancelButton">Cancel</a>
+                <a href="./home.html" class="button cancelButton">Cancel</a>
                 <div class="submit-reset">
-                    <button type="submit" class="button submitButton" id="submitButton">Submit</button>
+                    <button type="submit" class="button submitButton" id="submitButton" onclick="onSubmit()">Submit</button>
                     <button type="reset" class="resetButton button">Reset</button>
                 </div>
             </div>
         </form>
     </div>
-
+    <script src="../Js/EmployeePayrollData.js"></script>
+    <script src="../Js/employee_payroll.js"></script>
 </body>
 
 </html>
