@@ -1,14 +1,5 @@
 class EmployeePayrollData {
 
-    constructor(...params) {
-        this.id = params[0];
-        this.name = params[1];
-        this.salary = params[2];
-        this.gender = params[3];
-        this.startDate = params[4];
-    }
-
-
     get id() {
         return this._id;
     }
@@ -19,23 +10,29 @@ class EmployeePayrollData {
             this._id = id;
         }
         else {
-            throw new Error("id is Incorrect");
+            throw "id is Incorrect";
         }
     }
+
     get name() {
         return this._name;
     }
 
     set name(name) {
-        let nameRegex = RegExp('^[A-Z]{1}[a-zA-Z0-9]{3,}$');
+        let nameRegex = RegExp('^[A-Z]{1}[a-zA-Z]{3,}$');
         if (nameRegex.test(name)) {
             this._name = name;
         }
         else {
-            throw new Error("Name is Incorrect");
+            throw "Name is Incorrect";
         }
     }
 
+    get profilePic() { return this._profilePic; }
+
+    set profilePic(profilePic) {
+        this._profilePic = profilePic;
+    }
     get salary() {
         return this._salary;
     }
@@ -54,7 +51,7 @@ class EmployeePayrollData {
     }
 
     set gender(gender) {
-        let genderRegex = RegExp('^[M|F]$');
+        let genderRegex = RegExp('^[A-Za-z]*$');
         if (genderRegex.test(gender)) {
             this._gender = gender;
         }
@@ -62,23 +59,28 @@ class EmployeePayrollData {
             throw new Error("gender is Incorrect");
         }
     }
+    get department() { return this._department; }
+
+    set department(department) {
+        this._department = department;
+    }
+    get note() { return this._note; }
+    set note(note) {
+        this._note = note;
+    }
     get startDate() {
         return this._startDate;
     }
     set startDate(startDate) {
-        if (startDate <= new Date() && Math.abs(startDate - new Date() < 30))
+        if ((startDate <= new Date()) && Math.abs(startDate - new Date()) < 30)
             this._startDate = startDate;
         else throw 'Invalid date';
     }
 
     toString() {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        const employeeDate = this.startDate == undefined ? "undefined" :
-            this.startDate.toLocaleDateString("en-us", options);
+        const empDate = !this.startDate ? "undefined" : this.startDate.toLocaleDateString("en-US", options);
         return "id=" + this.id + ",name='" + this.name + ",salary=" + this.salary +
-            ",gender= " + this.gender + ",startDate= " + employeeDate;
+            ",gender= " + this.gender + ",profile pic= " + this.profilePic + ",department = " + this.department + ",startDate= " + this.startDate + ", note =" + this.note;
     }
 }
-
-let newEmployeePayrollData = new EmployeePayrollData(1234, "Terisa", 30000, "F", new Date());
-console.log(newEmployeePayrollData.toString());
