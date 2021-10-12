@@ -27,6 +27,7 @@ function onSubmit() {
 const save = () => {
   try{
     let employeePayrollData = createEmployeePayroll();
+    createUpdateLocalStorage(employeePayrollData);
   }catch(e){
     return;
   }
@@ -64,3 +65,17 @@ const getInputValueById =(id) =>{
   return value;
 }
 
+function createUpdateLocalStorage(employeePayrollData) 
+{
+    let employeePayrollList = JSON.parse(localStorage.getItem("EmployeePayrollList"));
+    if (employeePayrollList != undefined) 
+    {
+        employeePayrollList.push(employeePayrollData);
+    } 
+    else 
+    {
+        employeePayrollList = [employeePayrollData];
+    }
+    alert("Local Storage Updated Successfully!\nTotal Employees : " + employeePayrollList.length);
+    localStorage.setItem("EmployeePayrollList", JSON.stringify(employeePayrollList));
+}
