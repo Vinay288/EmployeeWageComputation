@@ -31,7 +31,7 @@ const createInnerHtml = () => {
               ${getDeptHtml(empPayrollData._department)}
               </td>
               <td>${empPayrollData._salary}</td>
-              <td>${empPayrollData._startDate}</td>
+              <td>${formatDate(empPayrollData._startDate)}</td>
               <td>
                 <img
                   id="1"
@@ -51,7 +51,6 @@ const createInnerHtml = () => {
         length += 1;
     }
     document.querySelector("#table-display").innerHTML = innerHtml;
-    // document.querySelector(".emp-count").innerHTML=length;
 };
 const createEmployeePayrollJSON = () => {
     let employeePayrollListLocal = [
@@ -87,3 +86,9 @@ const getDeptHtml = (departmentList) => {
     }
     return deptHtml;
 };
+const formatDate = (date) => {
+    date = new Date(date);
+    return (
+      date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
+    );
+  };
