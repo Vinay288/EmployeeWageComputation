@@ -6,9 +6,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
 });
 const getEmployeePayrollDataFromStorage = () => {
     return localStorage.getItem("EmployeePayrollList")
-      ? JSON.parse(localStorage.getItem("EmployeePayrollList"))
-      : [];
-  };
+        ? JSON.parse(localStorage.getItem("EmployeePayrollList"))
+        : [];
+};
 
 const createInnerHtml = () => {
     const headerHtml = "<tr><th></th><th>Name</th><th>Gender</th><th>Department</th><th>Salary</th><th>Start Date</th><th>Actions</th></tr>";
@@ -48,7 +48,7 @@ const createInnerHtml = () => {
               </td>
             </tr>
       `;
-      length+=1;
+        length += 1;
     }
     document.querySelector("#table-display").innerHTML = innerHtml;
     // document.querySelector(".emp-count").innerHTML=length;
