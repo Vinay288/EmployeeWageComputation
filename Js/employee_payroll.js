@@ -5,10 +5,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
   name.addEventListener('input', function () {
     if (name.value.length == 0) {
       textError.textContent = "";
+      document.getElementById('submitButton').disabled=false;
       return;
     }
     try {
-      (new EmployeePayrollData()).name = name.value;;
+      (new EmployeePayrollData()).name = name.value;
+      document.getElementById('submitButton').disabled=false;
       textError.textContent = "";
     } catch (e) {
       textError.textContent = e;
@@ -19,6 +21,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
   salary.addEventListener("input", function () {
     salaryOutput.textContent = salary.value;
   });
+  var date = document.getElementById("day");
+  var month = document.getElementById("month");
+  var year = document.getElementById("year");
+  const dateError = document.querySelector(".date-error");
+  date.addEventListener("change", validateDate);
+  month.addEventListener("change", validateDate);
+  year.addEventListener("change", validateDate);
+
+  function validateDate() {
+    let startDate = Date.parse(
+      year.value + "-" + month.value + "-" + date.value
+    );
+    try {
+      new EmployeePayrollData().startDate = startDate;
+      dateError.textContent = "";
+    } catch (e) {
+      dateError.textContent = e;
+    }
+  }
 });
 function onSubmit() {
   let employeeData = new EmployeePayrollData(document.getElementById('name').value, document.getElementById('salary').value, document.getElementById('gender').value, document.getElementById('startDate'))
