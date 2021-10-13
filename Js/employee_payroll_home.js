@@ -1,34 +1,29 @@
 window.addEventListener("DOMContentLoaded", (event) => {
     createInnerHtml();
-  });
-  
-  const createInnerHtml = () => {
-    const headerHtml = `<tr>
-      <th></th>
-      <th>Name</th>
-      <th>Gender</th>
-      <th>Department</th>
-      <th>Salary</th>
-      <th>Start Date</th>
-      <th>Actions</th>
-    </tr>`;
-    const innerHtml = `${headerHtml}
+});
+
+const createInnerHtml = () => {
+    const headerHtml = "<tr><th></th><th>Name</th><th>Gender</th><th>Department</th><th>Salary</th><th>Start Date</th><th>Actions</th></tr>";
+    let innerHtml = `${headerHtml}`;
+    let empPayrollList = createEmployeePayrollJSON();
+    let length=0;
+    for (const empPayrollData of empPayrollList) {
+        innerHtml = `${innerHtml}
             <tr>
               <td>
                 <img
                   class="profile"
-                  alt=""
-                  src="../Assets/profile-images/Ellipse -2.png"
+                  alt="profile picture"
+                  src="${empPayrollData._profile}"
                 />
               </td>
-              <td>Narayan Mahadevan</td>
-              <td>Male</td>
+              <td>${empPayrollData._name}</td>
+              <td>${empPayrollData._gender}</td>
               <td>
-                <div class="dept-label">HR</div>
-                <div class="dept-label">Finance</div>
+              ${getDeptHtml(empPayrollData._department)}
               </td>
-              <td>3000000</td>
-              <td>1 Nov 2020</td>
+              <td>${empPayrollData._salary}</td>
+              <td>${empPayrollData._startDate}</td>
               <td>
                 <img
                   id="1"
@@ -45,5 +40,42 @@ window.addEventListener("DOMContentLoaded", (event) => {
               </td>
             </tr>
       `;
+      length+=1;
+    }
     document.querySelector("#table-display").innerHTML = innerHtml;
-  };
+    document.querySelector(".emp-count").innerHTML=length;
+};
+const createEmployeePayrollJSON = () => {
+    let employeePayrollListLocal = [
+        {
+            _name: "Narayan Mahadevan",
+            _gender: "Male",
+            _department: ["Finance", "Engineering"],
+            _salary: "5000000",
+            _startDate: "29 Oct 2020",
+            _note: "",
+            _id: new Date().getTime(),
+            _profile: "../Assets/profile-images/Ellipse -2.png",
+        },
+        {
+            _name: "Raju",
+            _gender: "Male",
+            _department: ["Sales", "Others"],
+            _salary: "550000",
+            _startDate: "1 Oct 2021",
+            _note: "",
+            _id: new Date().getTime() + 1,
+            _profile: "../Assets/profile-images/Ellipse -3.png",
+        },
+    ];
+
+    return employeePayrollListLocal;
+};
+
+const getDeptHtml = (departmentList) => {
+    let deptHtml = "";
+    for (const dept of departmentList) {
+        deptHtml = `${deptHtml}<div class="dept-label">${dept}</div>`;
+    }
+    return deptHtml;
+};
