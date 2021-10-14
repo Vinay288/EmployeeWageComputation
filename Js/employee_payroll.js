@@ -63,11 +63,13 @@ const createEmployeePayroll = () => {
   employeePayrollData.department = getSelectedValues('[name=department]');
   employeePayrollData.salary = getInputValueById('#salary');
   employeePayrollData.note = getInputValueById('#notes');
+  employeePayrollData.id=Math.floor(Math.random()*100);
   let date = getInputValueById('#month') + " " + getInputValueById('#day') + ", " +
     getInputValueById('#year');
   console.log(date)
   employeePayrollData.startDate = new Date(date);
   alert(employeePayrollData.toString());
+  resetForm();
   return employeePayrollData;
 }
 const getSelectedValues = (propertyValue) => {
