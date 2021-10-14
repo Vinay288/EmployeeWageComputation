@@ -5,13 +5,7 @@ class EmployeePayrollData {
     }
 
     set id(id) {
-        let idRegex = RegExp('^\\d*$');
-        if (idRegex.test(id)) {
-            this._id = id;
-        }
-        else {
-            throw "id is Incorrect";
-        }
+        this._id=id;
     }
 
     get name() {
