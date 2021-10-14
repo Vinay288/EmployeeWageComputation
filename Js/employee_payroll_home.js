@@ -11,8 +11,8 @@ const getEmployeePayrollDataFromStorage = () => {
 };
 
 const createInnerHtml = () => {
+  if (employeePayrollList.length == 0) return;
     const headerHtml = "<tr><th></th><th>Name</th><th>Gender</th><th>Department</th><th>Salary</th><th>Start Date</th><th>Actions</th></tr>";
-    if (employeePayrollList.length == 0) return;
     let innerHtml = `${headerHtml}`;
     for (const empPayrollData of employeePayrollList) {
         console.log(empPayrollData._profile);
@@ -34,13 +34,13 @@ const createInnerHtml = () => {
               <td>${formatDate(empPayrollData._startDate)}</td>
               <td>
                 <img
-                  id="1"
+                  id="${empPayrollData._id}"
                   onclick="remove(this)"
                   alt="delete"
                   src="../Assets/icons/delete-black-18dp.svg"
                 />
                 <img
-                  id="1"
+                  id="${empPayrollData._id}"
                   alt="edit"
                   onclick="update(this)"
                   src="../Assets/icons/create-black-18dp.svg"
@@ -92,3 +92,13 @@ const formatDate = (date) => {
       date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
     );
   };
+  const remove=(node) => {
+    let employeePayrollData= employeePayrollList.find(empData=>empData._id==node.id);
+    if(!employeePayrollData) return;
+    const index=employeePayrollList.map(empData=>empData._id).indexOf(employeePayrollData._id);
+    employeePayrollList.splice(index,1);
+    localStorage.setItem("EmployeePayrollList",JSON.stringify(employeePayrollList));
+    document.querySelector(".emp-count").textContent = employeePayrollList.length;
+    createInnerHtml();
+
+  }
