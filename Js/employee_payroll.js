@@ -1,4 +1,5 @@
-
+let isUpdate = false;
+let employeePayrollObj = {};
 window.addEventListener('DOMContentLoaded', (event) => {
   const name = document.querySelector('#name');
   const textError = document.querySelector('.text-error');
@@ -41,6 +42,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
       dateError.textContent = e;
     }
   }
+  checkForUpdate();
 });
 const save = () => {
   try {
@@ -63,7 +65,7 @@ const createEmployeePayroll = () => {
   employeePayrollData.department = getSelectedValues('[name=department]');
   employeePayrollData.salary = getInputValueById('#salary');
   employeePayrollData.note = getInputValueById('#notes');
-  employeePayrollData.id=Math.floor(Math.random()*100);
+  employeePayrollData.id = Math.floor(Math.random() * 100);
   let date = getInputValueById('#month') + " " + getInputValueById('#day') + ", " +
     getInputValueById('#year');
   console.log(date)
@@ -129,3 +131,43 @@ const resetRange = (propertyId, outputId) => {
   const outputElement = document.querySelector(outputId);
   outputElement.textContent = rangeElement.value;
 };
+const checkForUpdate = () => {
+  const employeePayrollJson = localStorage.getItem('editEmp');
+  isUpdate = employeePayrollJson ? true : false;
+  if (!isUpdate) return;
+  employeePayrollObj = JSON.parse(employeePayrollJson);
+  setForm();
+}
+const setForm = () => {
+  document.getElementById('submitButton').innerHTML="Update";
+  document.getElementById('submitButton').disabled=false;
+  setValue('#name', employeePayrollObj._name);
+  setSelectedValues('[name=profile]', employeePayrollObj._profile);
+  setSelectedValues('[name=gender]', employeePayrollObj._gender);
+  setSelectedValues('[name=department]', employeePayrollObj._department);
+  setValue('#salary', employeePayrollObj._salary);
+  setTextValue('.salary-output', employeePayrollObj._salary);
+  setValue('#notes', employeePayrollObj._note);
+  let date = stringifyDate(employeePayrollObj._startDate).split(" ");
+  setValue('#day', date[0]);
+  setValue('#month', date[1]);
+  setValue('#year', date[2]);
+
+}
+const setSelectedValues = (propertyValue, value) => {
+  let allItems = document.querySelectorAll(propertyValue);
+  allItems.forEach(item => {
+    if (Array.isArray(value)) {
+      if (value.includes(item.value)) {
+        item.checked = true;
+      }
+    }
+    else if (item.value === value)
+      item.checked = true;
+  });
+}
+
+const setSelectedIndex = (id, index) => {
+  const element = document.querySelector(id);
+  element.selectedIndex = index;
+}
