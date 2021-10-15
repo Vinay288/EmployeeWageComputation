@@ -45,14 +45,34 @@ window.addEventListener('DOMContentLoaded', (event) => {
   checkForUpdate();
 });
 const save = () => {
+  event.preventDefault();
+  event.stopPropagation();
   try {
-    let employeePayrollData = createEmployeePayroll();
-    createUpdateLocalStorage(employeePayrollData);
+    setEmployeePayrollObject();
+    createAndUpdateStorage();
+    resetForm();
+    window.location.replace(site_properties.home_page);
   } catch (e) {
+    console.error(e);
     return;
   }
 }
-const createEmployeePayroll = () => {
+const setEmployeePayrollObject = () => {
+  employeePayrollObj._name = getInputValueById("#name");
+  employeePayrollObj._profilePic = getSelectedValues("[name=profile]").pop();
+  employeePayrollObj.gender = getSelectedValues("[name=gender]").pop();
+  employeePayrollObj.department = getSelectedValues("[name=department]");
+  employeePayrollObj.salary = getInputValueById("#salary");
+  employeePayrollObj.note = getInputValueById("#notes");
+  let date =
+    getInputValueById("#year") +
+    "-" +
+    getInputValueById("#month") +
+    "-" +
+    getInputValueById("#day");
+  employeePayrollObj.startDate = new Date(Date.parse(date));
+};
+const createEmployeePayroll = (id) => {
   let employeePayrollData = new EmployeePayrollData();
   try {
     employeePayrollData.name = getInputValueById('#name');
@@ -60,12 +80,14 @@ const createEmployeePayroll = () => {
     setTextValue('.text-error', e);
     throw e;
   }
+  
+  if (!id) employeePayrollData._id = Math.floor(Math.random() * 100);
+  else employeePayrollData._id = id;
   employeePayrollData.profile = getSelectedValues('[name=profile]').pop();
   employeePayrollData.gender = getSelectedValues('[name=gender]').pop();
   employeePayrollData.department = getSelectedValues('[name=department]');
   employeePayrollData.salary = getInputValueById('#salary');
   employeePayrollData.note = getInputValueById('#notes');
-  employeePayrollData.id = Math.floor(Math.random() * 100);
   let date = getInputValueById('#month') + " " + getInputValueById('#day') + ", " +
     getInputValueById('#year');
   console.log(date)
@@ -87,17 +109,37 @@ const getInputValueById = (id) => {
   return value;
 }
 
-function createUpdateLocalStorage(employeePayrollData) {
-  let employeePayrollList = JSON.parse(localStorage.getItem("EmployeePayrollList"));
-  if (employeePayrollList != undefined) {
-    employeePayrollList.push(employeePayrollData);
+const createAndUpdateStorage = () => {
+  let employeePayrollList = JSON.parse(
+    localStorage.getItem("EmployeePayrollList")
+  );
+
+  if (employeePayrollList) {
+    let empPayrollData = employeePayrollList.find(
+      (empData) => empData._id == employeePayrollObj._id
+    );
+
+    if (!empPayrollData) {
+      employeePayrollList.push(createEmployeePayroll());
+    } else {
+      const index = employeePayrollList
+        .map((empData) => empData._id)
+        .indexOf(empPayrollData._id);
+      employeePayrollList.splice(
+        index,
+        1,
+        createEmployeePayroll(empPayrollData._id)
+      );
+    }
+  } else {
+    employeePayrollList = [createEmployeePayroll()];
   }
-  else {
-    employeePayrollList = [employeePayrollData];
-  }
-  alert("Local Storage Updated Successfully!\nTotal Employees : " + employeePayrollList.length);
-  localStorage.setItem("EmployeePayrollList", JSON.stringify(employeePayrollList));
-}
+  localStorage.setItem(
+    "EmployeePayrollList",
+    JSON.stringify(employeePayrollList)
+  );
+  window.location.replace(site_properties.home_page);
+};
 const resetForm = () => {
   setValue("#name", "");
   unsetSelectedValues("[name=profile]");
@@ -139,8 +181,8 @@ const checkForUpdate = () => {
   setForm();
 }
 const setForm = () => {
-  document.getElementById('submitButton').innerHTML="Update";
-  document.getElementById('submitButton').disabled=false;
+  document.getElementById('submitButton').innerHTML = "Update";
+  document.getElementById('submitButton').disabled = false;
   setValue('#name', employeePayrollObj._name);
   setSelectedValues('[name=profile]', employeePayrollObj._profile);
   setSelectedValues('[name=gender]', employeePayrollObj._gender);
