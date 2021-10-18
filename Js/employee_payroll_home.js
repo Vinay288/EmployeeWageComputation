@@ -97,10 +97,23 @@ const remove = (node) => {
   if (!employeePayrollData) return;
   const index = employeePayrollList.map(empData => empData.id).indexOf(employeePayrollData.id);
   employeePayrollList.splice(index, 1);
+  if(site_properties.localStorage.match("true")){
   localStorage.setItem("EmployeePayrollList", JSON.stringify(employeePayrollList));
   document.querySelector(".emp-count").textContent = employeePayrollList.length;
   createInnerHtml();
+  }
+  else{
+    const deleteURL= site_properties.site_url+employeePayrollData.id.toString();
+    makeServiceCall("DELETE",deleteURL,false)
+    .then(responseText =>{
+      createInnerHtml();
+    })
+    .catch(error =>{
+      console.log("DELETE ERROR status: "+JSON.stringify(error));
+    });
+  }
 }
+
 
 const update = (node) => {
   let employeePayrollData = employeePayrollList.find(empData => empData.id == node.id);
