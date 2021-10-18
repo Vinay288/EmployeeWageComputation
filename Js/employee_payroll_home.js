@@ -15,23 +15,22 @@ const createInnerHtml = () => {
   const headerHtml = "<tr><th></th><th>Name</th><th>Gender</th><th>Department</th><th>Salary</th><th>Start Date</th><th>Actions</th></tr>";
   let innerHtml = `${headerHtml}`;
   for (const empPayrollData of employeePayrollList) {
-    console.log(empPayrollData._profile);
     innerHtml = `${innerHtml}
             <tr>
               <td>
                 <img
                   class="profile"
                   alt="profile picture"
-                  src="${empPayrollData._profile}"
+                  src="${empPayrollData.profile}"
                 >
               </td>
-              <td>${empPayrollData._name}</td>
-              <td>${empPayrollData._gender}</td>
+              <td>${empPayrollData.name}</td>
+              <td>${empPayrollData.gender}</td>
               <td>
-              ${getDeptHtml(empPayrollData._department)}
+              ${getDeptHtml(empPayrollData.department)}
               </td>
-              <td>${empPayrollData._salary}</td>
-              <td>${formatDate(empPayrollData._startDate)}</td>
+              <td>${empPayrollData.salary}</td>
+              <td>${formatDate(empPayrollData.startDate)}</td>
               <td>
                 <img
                   id="${empPayrollData.id}"
