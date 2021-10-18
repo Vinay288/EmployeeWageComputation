@@ -61,20 +61,20 @@ const save = () => {
   }
 }
 const setEmployeePayrollObject = () => {
-  if(!isUpdate) employeePayrollObj._id=createNewEmployeeId();
-  employeePayrollObj._name = getInputValueById("#name");
-  employeePayrollObj._profile = getSelectedValues("[name=profile]").pop();
-  employeePayrollObj._gender = getSelectedValues("[name=gender]").pop();
-  employeePayrollObj._department = getSelectedValues("[name=department]");
-  employeePayrollObj._salary = getInputValueById("#salary");
-  employeePayrollObj._note = getInputValueById("#notes");
+  if(!isUpdate) employeePayrollObj.id=createNewEmployeeId();
+  employeePayrollObj.name = getInputValueById("#name");
+  employeePayrollObj.profile = getSelectedValues("[name=profile]").pop();
+  employeePayrollObj.gender = getSelectedValues("[name=gender]").pop();
+  employeePayrollObj.department = getSelectedValues("[name=department]");
+  employeePayrollObj.salary = getInputValueById("#salary");
+  employeePayrollObj.note = getInputValueById("#notes");
   let date =
     getInputValueById("#year") +
     "-" +
     getInputValueById("#month") +
     "-" +
     getInputValueById("#day");
-  employeePayrollObj._startDate = new Date(Date.parse(date));
+  employeePayrollObj.startDate = new Date(Date.parse(date));
 };
 
 const createNewEmployeeId = () => {
@@ -99,6 +99,7 @@ const getInputValueById = (id) => {
 }
 
 const createAndUpdateStorage = () => {
+  console.log(employeePayrollObj);
   let employeePayrollList = JSON.parse(
     localStorage.getItem("EmployeePayrollList")
   );
@@ -172,14 +173,14 @@ const checkForUpdate = () => {
 const setForm = () => {
   document.getElementById('submitButton').innerHTML = "Update";
   document.getElementById('submitButton').disabled = false;
-  setValue('#name', employeePayrollObj._name);
-  setSelectedValues('[name=profile]', employeePayrollObj._profile);
-  setSelectedValues('[name=gender]', employeePayrollObj._gender);
-  setSelectedValues('[name=department]', employeePayrollObj._department);
-  setValue('#salary', employeePayrollObj._salary);
-  setTextValue('.salary-output', employeePayrollObj._salary);
-  setValue('#notes', employeePayrollObj._note);
-  let date = stringifyDate(employeePayrollObj._startDate).split(" ");
+  setValue('#name', employeePayrollObj.name);
+  setSelectedValues('[name=profile]', employeePayrollObj.profile);
+  setSelectedValues('[name=gender]', employeePayrollObj.gender);
+  setSelectedValues('[name=department]', employeePayrollObj.department);
+  setValue('#salary', employeePayrollObj.salary);
+  setTextValue('.salary-output', employeePayrollObj.salary);
+  setValue('#notes', employeePayrollObj.note);
+  let date = stringifyDate(employeePayrollObj.startDate).split(" ");
   setValue('#day', date[0]);
   setValue('#month', date[1]);
   setValue('#year', date[2]);
