@@ -62,19 +62,19 @@ const save = () => {
 }
 const setEmployeePayrollObject = () => {
   if(!isUpdate) employeePayrollObj.id=createNewEmployeeId();
-  employeePayrollObj.name = getInputValueById("#name");
-  employeePayrollObj.profile = getSelectedValues("[name=profile]").pop();
-  employeePayrollObj.gender = getSelectedValues("[name=gender]").pop();
-  employeePayrollObj.department = getSelectedValues("[name=department]");
-  employeePayrollObj.salary = getInputValueById("#salary");
-  employeePayrollObj.note = getInputValueById("#notes");
+  employeePayrollObj._name = getInputValueById("#name");
+  employeePayrollObj._profile = getSelectedValues("[name=profile]").pop();
+  employeePayrollObj._gender = getSelectedValues("[name=gender]").pop();
+  employeePayrollObj._department = getSelectedValues("[name=department]");
+  employeePayrollObj._salary = getInputValueById("#salary");
+  employeePayrollObj._note = getInputValueById("#notes");
   let date =
     getInputValueById("#year") +
     "-" +
     getInputValueById("#month") +
     "-" +
     getInputValueById("#day");
-  employeePayrollObj.startDate = new Date(Date.parse(date));
+  employeePayrollObj._startDate = new Date(Date.parse(date));
 };
 
 const createNewEmployeeId = () => {
