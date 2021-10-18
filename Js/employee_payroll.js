@@ -194,14 +194,14 @@ const checkForUpdate = () => {
 const setForm = () => {
   document.getElementById('submitButton').innerHTML = "Update";
   document.getElementById('submitButton').disabled = false;
-  setValue('#name', employeePayrollObj.name);
-  setSelectedValues('[name=profile]', employeePayrollObj.profile);
-  setSelectedValues('[name=gender]', employeePayrollObj.gender);
-  setSelectedValues('[name=department]', employeePayrollObj.department);
-  setValue('#salary', employeePayrollObj.salary);
-  setTextValue('.salary-output', employeePayrollObj.salary);
-  setValue('#notes', employeePayrollObj.note);
-  let date = stringifyDate(employeePayrollObj.startDate).split(" ");
+  setValue('#name', employeePayrollObj._name);
+  setSelectedValues('[name=profile]', employeePayrollObj._profile);
+  setSelectedValues('[name=gender]', employeePayrollObj._gender);
+  setSelectedValues('[name=department]', employeePayrollObj._department);
+  setValue('#salary', employeePayrollObj._salary);
+  setTextValue('.salary-output', employeePayrollObj._salary);
+  setValue('#notes', employeePayrollObj._note);
+  let date = stringifyDate(employeePayrollObj._startDate).split(" ");
   setValue('#day', date[0]);
   setValue('#month', date[1]);
   setValue('#year', date[2]);
