@@ -52,16 +52,37 @@ const save = () => {
   event.stopPropagation();
   try {
     setEmployeePayrollObject();
+    if(site_properties.localStorage.match("true")){
     createAndUpdateStorage();
     resetForm();
+    }
+    else{
+      createOrUpdateEmployeePayroll();
+    }
     window.location.replace(site_properties.home_page);
   } catch (e) {
     console.error(e);
     return;
   }
 }
+const createOrUpdateEmployeePayroll=()=>{
+  let postURL=site_properties.site_url;
+  let methodCall="POST";
+  if(isUpdate){
+    methodCall="PUT"
+    postURL=postURL+employeePayrollObj.id.toString();
+  }
+  makeServiceCall(methodCall,postURL,true,employeePayrollObj)
+  .then(responseText=>{
+    resetForm();
+    window.location.replace(site_properties.home_page);
+  })
+  .catch(error =>{
+    throw error;
+  });
+}
 const setEmployeePayrollObject = () => {
-  if(!isUpdate) employeePayrollObj.id=createNewEmployeeId();
+  if(!isUpdate && site_properties.localStorage.match("true")) employeePayrollObj.id=createNewEmployeeId();
   employeePayrollObj._name = getInputValueById("#name");
   employeePayrollObj._profile = getSelectedValues("[name=profile]").pop();
   employeePayrollObj._gender = getSelectedValues("[name=gender]").pop();
