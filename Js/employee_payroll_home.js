@@ -1,14 +1,40 @@
+let employeePayrollList;
 window.addEventListener("DOMContentLoaded", (event) => {
-  employeePayrollList = getEmployeePayrollDataFromStorage();
+  if (site_properties.localStorage.match("true")){
+    getEmployeePayrollDataFromStorage();
+    console.log("fdsfs");
+  }
+  else{
+    getEmployeePayrollDataFromServer();
+  }
+  
+});
+
+const getEmployeePayrollDataFromStorage = () => {
+  employeePayrollList = localStorage.getItem("EmployeePayrollList")
+    ? JSON.parse(localStorage.getItem("EmployeePayrollList"))
+    : [];
+    processEmployeeDataResponse();
+};
+
+const processEmployeeDataResponse=()=>{
   document.querySelector(".emp-count").textContent = employeePayrollList.length;
   createInnerHtml();
   localStorage.removeItem("editEmp");
-});
-const getEmployeePayrollDataFromStorage = () => {
-  return localStorage.getItem("EmployeePayrollList")
-    ? JSON.parse(localStorage.getItem("EmployeePayrollList"))
-    : [];
-};
+}
+
+const getEmployeePayrollDataFromServer = () => {
+  makeServiceCall("GET", site_properties.site_url, true)
+    .then(responseText => {
+      employeePayrollList = JSON.parse(responseText);
+      processEmployeeDataResponse();
+    })
+    .catch(error => {
+      console.log("GET error status" + JSON.stringify(error));
+      employeePayrollList = [];
+      processEmployeeDataResponse();
+    });
+}
 
 const createInnerHtml = () => {
   if (employeePayrollList.length == 0) return;
@@ -21,16 +47,16 @@ const createInnerHtml = () => {
                 <img
                   class="profile"
                   alt="profile picture"
-                  src="${empPayrollData.profile}"
+                  src="${empPayrollData._profile}"
                 >
               </td>
-              <td>${empPayrollData.name}</td>
-              <td>${empPayrollData.gender}</td>
+              <td>${empPayrollData._name}</td>
+              <td>${empPayrollData._gender}</td>
               <td>
-              ${getDeptHtml(empPayrollData.department)}
+              ${getDeptHtml(empPayrollData._department)}
               </td>
-              <td>${empPayrollData.salary}</td>
-              <td>${formatDate(empPayrollData.startDate)}</td>
+              <td>${empPayrollData._salary}</td>
+              <td>${formatDate(empPayrollData._startDate)}</td>
               <td>
                 <img
                   id="${empPayrollData.id}"
@@ -53,17 +79,19 @@ const createInnerHtml = () => {
 };
 
 const getDeptHtml = (departmentList) => {
- 
-    deptHtml = `<div class="dept-label">${departmentList}</div>`;
-  
+
+  deptHtml = `<div class="dept-label">${departmentList}</div>`;
+
   return deptHtml;
 };
+
 const formatDate = (date) => {
   date = new Date(date);
   return (
     date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
   );
 };
+
 const remove = (node) => {
   let employeePayrollData = employeePayrollList.find(empData => empData.id == node.id);
   if (!employeePayrollData) return;
@@ -72,8 +100,8 @@ const remove = (node) => {
   localStorage.setItem("EmployeePayrollList", JSON.stringify(employeePayrollList));
   document.querySelector(".emp-count").textContent = employeePayrollList.length;
   createInnerHtml();
-
 }
+
 const update = (node) => {
   let employeePayrollData = employeePayrollList.find(empData => empData.id == node.id);
   if (!employeePayrollData) return;
